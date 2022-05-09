@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "capstone"
+version = "0.1.0"
+description = "Expectancy of Trading Signals"
+authors = ["tthwmk <tthwmk@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.10"
+pandas = "^1.4.2"
+vectorbt = "^0.23.3"
+Backtesting = "^0.3.3"
+yfinance = "^0.1.70"
+scikit-learn = "^1.0.2"
+pandas-datareader = "^0.10.0"
+pandas-ta = "^0.3.14-beta.0"
+
+[tool.poetry.dev-dependencies]
+black = "^22.3.0"
+mypy = "^0.950"
+get-all-tickers = "^1.8"
+pyarrow = "^8.0.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,2 @@
+add_pip_as_python_dependency: False
+channel_priority: strict
