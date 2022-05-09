@@ -9,7 +9,12 @@ class SMAStrategy(Strategy):
         self.indicator = vbt.IndicatorFactory.from_pandas_ta("SMA")
         self.fast_sma, self.slow_sma = self.indicator.run_combs(self.data, self.windows, short_names=['fast', 'slow'])
     
+    def init(self):
+        indicator = vbt.IndicatorFactory.from_pandas_ta("SMA")
+        self.fast_sma, self.slow_sma = indicator.run_combs(self.data, self.windows, short_names=['fast', 'slow'])
+        
     def get_entries(self):
+        self.init()
         return self.fast_sma.sma_crossed_above(self.slow_sma)
     
     def get_exits(self):

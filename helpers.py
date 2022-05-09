@@ -37,7 +37,7 @@ def random_like(
     return pd.Series(data=random_data, index=data.index)
 
 
-DATA_PATH = Path("./data").resolve()
+DATA_PATH = Path("./indian_stocks").resolve()
 
 if not DATA_PATH.exists():
     DATA_PATH.mkdir()
@@ -48,7 +48,6 @@ def download_data(
     period: Optional[str] = "max",
     interval: Optional[str] = "1d",
     auto_adjust: Optional[bool] = True,
-    retries: Optional[int] = 3,
     path: Union[str, Path] = DATA_PATH,
 ):
     """
@@ -60,22 +59,22 @@ def download_data(
         executor.map(download_data, [Tickers])
 
     TODO:
-        stop it from save parquet files of empty tickers
+        stop it from saving parquet files of empty tickers
 
     """
-    for _ in range(retries):
-        try:
-            temp = yf.Ticker(ticker)
-            temp_history = temp.history(
-                period=period, interval=interval, auto_adjust=auto_adjust
-            )
-            temp_history.to_parquet(
-                path=f"{path/ticker}.parquet", engine="pyarrow", index=True
-            )
-            print(f"{ticker} was successfully downloaded")
-            time.sleep(2)
-        except:
-            pass
+    try:
+        temp = yf.Ticker(ticker)
+        temp_history = temp.history(
+            period=period, interval=interval, auto_adjust=auto_adjust
+        )
+        temp_history.to_parquet(
+            path=f"{path/ticker}.parquet", engine="pyarrow", index=True
+        )
+    except:
+        pass
+    else:
+        print(f"{ticker} was successfully downloaded")
+        time.sleep(2)
 
 
 def delete_empty_parquet(path):
